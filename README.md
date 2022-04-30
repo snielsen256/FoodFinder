@@ -12,9 +12,10 @@ The city of Rexburg, Idaho has a shuttle service run by Walmart and Salt Lake Ex
 
 # Useful Websites
 
-* [ArcGIS tutorial](https://developers.arcgis.com/documentation/mapping-apis-and-services/tutorials/)
-* [Web Site Name](http://url.link.goes.here)
-* [Web Site Name](http://url.link.goes.here)
+* [ArcGIS tutorials](https://developers.arcgis.com/documentation/mapping-apis-and-services/tutorials/)
+* [ArcGIS: Display a map](https://developers.arcgis.com/javascript/latest/display-a-map/)
+* [ArcGis: Display a pop-up](https://developers.arcgis.com/javascript/latest/display-a-pop-up/)
+
 
 # Future Work
 

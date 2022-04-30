@@ -8,6 +8,36 @@
     <title>Food Finder</title>
     <link href="styles/FoodFinder.css" rel="stylesheet">
     <script src="scripts/FoodFinder.js"></script>
+    <script src="https://js.arcgis.com/4.23/"></script>
+    <script>
+        
+        require(["esri/config","esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer"], function (esriConfig,Map, MapView) {
+  
+            // API key
+            esriConfig.apiKey = "AAPKfc20ed12bd0646ceb1528a11692825f2EtVsMSJC4_3Qkj7va_k0YVBnJD1QtAxvVvUnHkOB3rry4stBPvhVef98tMFXVUCe";
+            
+            // Sets up the base map
+            const map = new Map({
+            basemap: "arcgis-topographic"
+            });
+  
+            //orients the focus of the map
+            const view = new MapView({
+              map: map,
+              center: [ -111.782, 43.822], //longitude and latitude coordinates
+              zoom: 16, // zoom level. Higher numbers = Higher zoom
+              container: "viewDiv" 
+            });
+
+            //-111.788, 43.817
+            //Defines a pop-up point for shuttle stops
+            const popupShuttleStops = {
+                "title": "Shuttle Stop",
+                "content": "<b>Location</b> {STOP_NAME}"
+            }
+  
+        });
+      </script>
     
 </head>
 <body>
