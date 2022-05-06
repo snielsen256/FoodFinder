@@ -29,12 +29,39 @@
               container: "viewDiv" 
             });
 
-            //-111.788, 43.817
+        
             //Defines a pop-up point for shuttle stops
-            const popupShuttleStops = {
-                "title": "Shuttle Stop",
-                "content": "<b>Location</b> {STOP_NAME}"
+            const popup_bus = {
+                "title": Name,
+                "content": "<b>Location</b> {NAME}"
             }
+
+             //Defines a pop-up point for food
+            const popup_food = {
+                "title": NAME,
+                "content": "<b>Restauaunt:</b>{NAME}<br> <b>Busiest time:</b>{BUSY_PEAK}"
+            }
+            
+            //Bus layer
+            const bus_layer = new FeatureLayer({
+                url: "https://services7.arcgis.com/hTwI8JKdzBOwAz2e/arcgis/rest/services/bus_markers/FeatureServer/0",
+                outfields: ["NAME"],
+                popupTemplate: popup_bus
+            });
+
+            //food layer
+            const food_layer = new FeatureLayer({
+                url: "https://services7.arcgis.com/hTwI8JKdzBOwAz2e/arcgis/rest/services/food_markers/FeatureServer/0",
+                outfields: ["NAME","BUSY_PEAK"],
+                popupTemplate: popup_food
+            });
+
+            //add layers
+
+            map.add(bus_layer, 0)
+            map.add(food_layer, 1)
+
+            
   
         });
       </script>
