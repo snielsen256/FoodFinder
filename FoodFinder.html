@@ -11,7 +11,7 @@
     <script src="https://js.arcgis.com/4.23/"></script>
     <script>
         
-        require(["esri/config","esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer"], function (esriConfig,Map, MapView) {
+        require(["esri/config","esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer"], function (esriConfig, Map, MapView, FeatureLayer) {
   
             // API key
             esriConfig.apiKey = "AAPKfc20ed12bd0646ceb1528a11692825f2EtVsMSJC4_3Qkj7va_k0YVBnJD1QtAxvVvUnHkOB3rry4stBPvhVef98tMFXVUCe";
@@ -32,13 +32,13 @@
         
             //Defines a pop-up point for shuttle stops
             const popup_bus = {
-                "title": Name,
+                "title": "",
                 "content": "<b>Location</b> {NAME}"
             }
 
              //Defines a pop-up point for food
             const popup_food = {
-                "title": NAME,
+                "title": "",
                 "content": "<b>Restauaunt:</b>{NAME}<br> <b>Busiest time:</b>{BUSY_PEAK}"
             }
             
