@@ -24,6 +24,6 @@ The city of Rexburg, Idaho has a shuttle service run by Walmart and Salt Lake Ex
 
 # Future Work
 
-* Add different icons for bus and restaurant locations
+* Add different icons for bus and restaurant locations (build off of bus_renderer and food_renderer)
 * Interface with live servers instead of .csv files for more accurate information
 * Make pop-up information more visually appealing
