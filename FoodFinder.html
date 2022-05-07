@@ -6,12 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Food Finder</title>
-    <link href="styles/FoodFinder.css" rel="stylesheet">
-    <script src="scripts/FoodFinder.js"></script>
     <script src="https://js.arcgis.com/4.23/"></script>
+    <style>
+        html, body, #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%
+        }
+    </style>
     <script>
         
-        require(["esri/config","esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer"], function (esriConfig, Map, MapView, FeatureLayer) {
+        require(["esri/config","esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/Graphic", "esri/layers/GraphicsLayer"], function(esriConfig, Map, MapView, FeatureLayer, Graphic, GraphicsLayer) {
   
             // API key
             esriConfig.apiKey = "AAPKfc20ed12bd0646ceb1528a11692825f2EtVsMSJC4_3Qkj7va_k0YVBnJD1QtAxvVvUnHkOB3rry4stBPvhVef98tMFXVUCe";
@@ -29,6 +35,9 @@
               container: "viewDiv" 
             });
 
+            //defines a graphics layer for lines
+            const graphicsLayer = new GraphicsLayer();
+
         
             //Defines a pop-up point for shuttle stops
             const popup_bus = {
@@ -43,6 +52,7 @@
             };
 
             //Bus icon display
+            //Icon source: https://www.flaticon.com/free-icons/bus
             const bus_renderer = {
                 "type": "simple",
                 "symbol": {
@@ -54,22 +64,28 @@
                 symbol: {
                     type: "text",
                     color: "#0000FF",
+                    haloColor: "#EEEEEE",
+                    haloSize: "1px",
                     font: {
-                        size: "14px",
+                        size: "13px",
                         family: "Sans Serif",
                     }
                 },
-                labelPlacement: "above-center",
+                labelPlacement: "below-center",
                 labelExpressionInfo: {
                     expression: "$feature.NAME"
                 }
             };
 
             //Food icon display
+            //Icon source: https://www.flaticon.com/free-icons/food
             const food_renderer = {
                 "type": "simple",
                 "symbol": {
-                    "type": "simple"
+                    "type": "picture-marker",
+                    "url": "images/restaurant.png",
+                    "height": "20px",
+                    "width": "20px",
                 }
             };
 
@@ -77,12 +93,14 @@
                 symbol: {
                     type: "text",
                     color: "#D68716",
+                    haloColor: "#EEEEEE",
+                    haloSize: "1px",
                     font: {
-                        size: "14px",
+                        size: "13px",
                         family: "Sans Serif",
                     }
                 },
-                labelPlacement: "above-center",
+                labelPlacement: "below-center",
                 labelExpressionInfo: {
                     expression: "$feature.NAME"
                 }
@@ -106,12 +124,215 @@
                 labelingInfo: [food_label]
             });
 
-            //add components
-            map.add(bus_layer, 0)
-            map.add(food_layer, 1)
+            //define lines
 
+            //create line for each food place
+            //Food Name: Café Rio
+            //closest bus ID: 109
+            const food_111_line = {
+                type: "polyline",
+                paths: [
+                    [-111.78615719252123, 43.82205261381906],//coordinates of cafe rio
+                    [-111.78382389548896, 43.82234008801555]//coordinates of bus stop 109
+                ]
+            };   
+
+            //Food Name: Papa John's
+            //closest bus ID: 109
+            const food_112_line = {
+                type: "polyline",
+                paths: [
+                    [-111.78635792845736, 43.822037968114756],
+                    [-111.78382389548896, 43.82234008801555]
+                ]
+            };     
             
-  
+            //Food Name: Subway
+            //closest bus ID: 101
+            const food_113_line = {
+                type: "polyline",
+                paths: [
+                    [-111.77452028965558, 43.85661972672777],
+                    [-111.774703735192, 43.856044226415314]
+                ]
+            };
+
+            //Food Name: Panda Express
+            //closest bus ID: 101
+            const food_114_line = {
+                type: "polyline",
+                paths: [
+                    [-111.7775321290499, 43.85692110901291],
+                    [-111.774703735192, 43.856044226415314]
+                ]
+            };
+
+            //Food Name: Gator Jack's
+            //closest bus ID: 108
+            const food_115_line = {
+                type: "polyline",
+                paths: [
+                    [-111.78877075399761, 43.82213352474853],
+                    [-111.78666700794454, 43.819556638448304]
+                ]
+            };
+
+            //Food Name: DA Pineapple Grill
+            //closest bus ID: 107
+            const food_116_line = {
+                type: "polyline",
+                paths: [
+                    [-111.78881050433706, 43.81825098758607],
+                    [-111.78830168151723, 43.81767517076931]
+                ]
+            };
+
+            //Food Name: Casa De Ochoa
+            //closest bus ID: 107
+            const food_117_line = {
+                type: "polyline",
+                paths: [
+                    [-111.7888743704568, 43.81800214458726],
+                    [-111.78830168151723, 43.81767517076931]
+                ]
+            };
+
+            //Food Name: New Fong's
+            //closest bus ID: 107
+            const food_118_line = {
+                type: "polyline",
+                paths: [
+                    [-111.7900633331744, 43.818524976745636],
+                    [-111.78830168151723, 43.81767517076931]
+                ]
+            };
+
+            //Food Name: Teton Grill
+            //closest bus ID: 102
+            const food_119_line = {
+                type: "polyline",
+                paths: [
+                    [-111.78219782446234, 43.81848890203451],
+                    [-111.78092529709417, 43.817710674524754]
+                ]
+            };
+
+            //Food Name: K-Lani's
+            //closest bus ID: 109
+            const food_120_line = {
+                type: "polyline",
+                paths: [
+                    [-111.78426178774605, 43.824306480939256],
+                    [-111.78382389548896, 43.82234008801555]
+                ]
+            };
+
+            //Food Name: Gringo's Mexican Restaurant
+            //closest bus ID: 109
+            const food_121_line = {
+                type: "polyline",
+                paths: [
+                    [-111.78346350865988, 43.825101190084034],
+                    [-111.78382389548896, 43.82234008801555]
+                ]
+            };
+
+            //Food Name: The Pit Barbecue
+            //closest bus ID: 109
+            const food_122_line = {
+                type: "polyline",
+                paths: [
+                    [-111.78259838953845, 43.82523772190301],
+                    [-111.78382389548896, 43.82234008801555]
+                ]
+            };
+
+            //apply graphics to lines
+            const simple_line_type = {
+                type: "simple-line",
+                color: "#000000",
+                width: 1                
+            };
+
+            const line_graphic_111 = new Graphic({
+                geometry: food_111_line,
+                symbol: simple_line_type
+            });
+
+            const line_graphic_112 = new Graphic({
+                geometry: food_112_line,
+                symbol: simple_line_type
+            });
+
+            const line_graphic_113 = new Graphic({
+                geometry: food_113_line,
+                symbol: simple_line_type
+            });
+
+            const line_graphic_114 = new Graphic({
+                geometry: food_114_line,
+                symbol: simple_line_type
+            });
+
+            const line_graphic_115 = new Graphic({
+                geometry: food_115_line,
+                symbol: simple_line_type
+            });
+
+            const line_graphic_116 = new Graphic({
+                geometry: food_116_line,
+                symbol: simple_line_type
+            });
+
+            const line_graphic_117 = new Graphic({
+                geometry: food_117_line,
+                symbol: simple_line_type
+            });
+
+            const line_graphic_118 = new Graphic({
+                geometry: food_118_line,
+                symbol: simple_line_type
+            });
+
+            const line_graphic_119 = new Graphic({
+                geometry: food_119_line,
+                symbol: simple_line_type
+            });
+
+            const line_graphic_120 = new Graphic({
+                geometry: food_120_line,
+                symbol: simple_line_type
+            });
+
+            const line_graphic_121 = new Graphic({
+                geometry: food_121_line,
+                symbol: simple_line_type
+            });
+
+            const line_graphic_122 = new Graphic({
+                geometry: food_122_line,
+                symbol: simple_line_type
+            });
+
+            //add lines to graphics layer
+            graphicsLayer.add(line_graphic_111);
+            graphicsLayer.add(line_graphic_112);
+            graphicsLayer.add(line_graphic_113);
+            graphicsLayer.add(line_graphic_114);
+            graphicsLayer.add(line_graphic_115);
+            graphicsLayer.add(line_graphic_116);
+            graphicsLayer.add(line_graphic_117);
+            graphicsLayer.add(line_graphic_118);
+            graphicsLayer.add(line_graphic_119);
+            graphicsLayer.add(line_graphic_120);
+            graphicsLayer.add(line_graphic_121);
+            graphicsLayer.add(line_graphic_122);
+
+            //add components
+            map.add(bus_layer, 0);
+            map.add(food_layer, 1);
+            map.add(graphicsLayer);            
+
         });
       </script>
     
