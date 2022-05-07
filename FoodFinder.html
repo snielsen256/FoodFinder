@@ -11,7 +11,7 @@
         html, body, #viewDiv {
             padding: 0;
             margin: 0;
-            height: 100%;
+            height: 90%;
             width: 100%
         }
     </style>
@@ -42,13 +42,13 @@
             //Defines a pop-up point for shuttle stops
             const popup_bus = {
                 "title": "Bus Stop",
-                "content": "<b>Location</b> {NAME}"
+                "content": "<b>Location: </b> {NAME}<br><b>ID: </b>{ID}"
             };
 
              //Defines a pop-up point for food
             const popup_food = {
-                "title": "",
-                "content": "<b>Restauaunt:</b>{NAME}<br> <b>Busiest time:</b>{BUSY_PEAK}"
+                "title": "Restaurant",
+                "content": "<b>Name: </b>{NAME}<br><b>ID: </b>{ID}<b><br>Busiest time: </b>{BUSY_PEAK}"
             };
 
             //Bus icon display
@@ -109,7 +109,7 @@
             //Bus layer
             const bus_layer = new FeatureLayer({
                 url: "https://services7.arcgis.com/hTwI8JKdzBOwAz2e/arcgis/rest/services/bus_markers/FeatureServer/0",
-                outfields: ["NAME"],
+                outfields: ["NAME", "ID"],
                 popupTemplate: popup_bus,
                 //renderer: bus_renderer,
                 labelingInfo: [bus_label]
@@ -118,7 +118,7 @@
             //food layer
             const food_layer = new FeatureLayer({
                 url: "https://services7.arcgis.com/hTwI8JKdzBOwAz2e/arcgis/rest/services/food_markers/FeatureServer/0",
-                outfields: ["NAME","BUSY_PEAK"],
+                outfields: ["NAME", "ID", "BUSY_PEAK"],
                 popupTemplate: popup_food,
                 //renderer: food_renderer,
                 labelingInfo: [food_label]
